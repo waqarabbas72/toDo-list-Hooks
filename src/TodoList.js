@@ -20,6 +20,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const TodoList = () => {
   const [inputList, setInputList] = useState("walk The dog");
+  const [items , setItems] = useState([])
 
   const itemEvent = (e) => {
     setInputList(e.target.value);
@@ -76,7 +77,7 @@ const TodoList = () => {
               margin: "30px 10px",
             }}
           >
-            <ListItem>
+            {/* <ListItem>
               <ListItemIcon>
                 <ArrowRightIcon fontSize="large" sx={{ color: "black" }} />
               </ListItemIcon>
@@ -93,7 +94,29 @@ const TodoList = () => {
                   sx={{ width: "20px" }}
                 />
               </Button>
-            </ListItem>
+            </ListItem> */}
+            {items.map((itemValue)=>{
+               return(
+                <ListItem>
+                <ListItemIcon>
+                  <ArrowRightIcon fontSize="large" sx={{ color: "black" }} />
+                </ListItemIcon>
+                {itemValue}
+                <Button
+                  variant="outlined"
+                  color="error"
+                  size="small"
+                  sx={{ position: "absolute", right: "0" }}
+                >
+                  <DeleteIcon
+                    color="error"
+                    fontSize="large"
+                    sx={{ width: "20px" }}
+                  />
+                </Button>
+              </ListItem>
+               )
+            })}
           </List>
 
           <Button
