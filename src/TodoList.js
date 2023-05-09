@@ -19,15 +19,20 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const TodoList = () => {
-  const [inputList, setInputList] = useState("walk The dog");
+  const [inputList, setInputList] = useState(" ");
   const [items , setItems] = useState([])
 
   const itemEvent = (e) => {
     setInputList(e.target.value);
+};
+
+const addItem = (e) => {
+    setItems((oldItems) =>{
+        return [...oldItems , inputList]
+    })
+    setInputList("")
   };
-
-  const addItem = (e) => {};
-
+    
   return (
     <>
       <Container maxWidth="sm" sx={{ marginTop: "20px" }}>
@@ -62,6 +67,7 @@ const TodoList = () => {
               variant="standard"
               sx={{ width: "90%" }}
               onChange={itemEvent}
+              value={inputList}
             />
             <Button variant="outlined" onClick={addItem}>
               <AddIcon color="primary" fontSize="large" />
@@ -77,24 +83,6 @@ const TodoList = () => {
               margin: "30px 10px",
             }}
           >
-            {/* <ListItem>
-              <ListItemIcon>
-                <ArrowRightIcon fontSize="large" sx={{ color: "black" }} />
-              </ListItemIcon>
-              {inputList}
-              <Button
-                variant="outlined"
-                color="error"
-                size="small"
-                sx={{ position: "absolute", right: "0" }}
-              >
-                <DeleteIcon
-                  color="error"
-                  fontSize="large"
-                  sx={{ width: "20px" }}
-                />
-              </Button>
-            </ListItem> */}
             {items.map((itemValue)=>{
                return(
                 <ListItem>
@@ -106,11 +94,11 @@ const TodoList = () => {
                   variant="outlined"
                   color="error"
                   size="small"
-                  sx={{ position: "absolute", right: "0" }}
+                  sx={{ position: "absolute", right: "0",marginRight:"10px" }}
                 >
                   <DeleteIcon
                     color="error"
-                    fontSize="large"
+                    fontSize="small"
                     sx={{ width: "20px" }}
                   />
                 </Button>
@@ -119,14 +107,17 @@ const TodoList = () => {
             })}
           </List>
 
-          <Button
+          <Stack alignItems="center">
+            <Button
             variant="contained"
             color="error"
-            sx={{ margin: "10px" }}
+            sx={{ margin: "10px", }}
             endIcon={<DeleteIcon />}
+            
           >
             Clear All
-          </Button>
+          </Button></Stack>
+          <pre style={{textAlign:"center" , marginTop:"20px"}}>DESIGNED BY WAQAR-ABBAS</pre>
         </Box>
       </Container>
     </>
