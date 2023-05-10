@@ -92,7 +92,7 @@ const TodoList = () => {
               sx={{ width: "90%" }}
               value={inputList}
               onChange={itemEvent}
-              required
+              autoFocus
             />
             <Button
               variant="outlined"
@@ -114,7 +114,6 @@ const TodoList = () => {
             }}
           >
             {items.map((itemValue, index) => {
-              // const id = Math.floor(Math.random()*Date.now)
               return (
                 <ListComponent
                   text={itemValue}
@@ -139,9 +138,9 @@ const TodoList = () => {
               </Button>
             </Stack>
           )}
-          {/* <pre style={{ textAlign: "center", marginTop: "20px" }}>
+          <pre style={{ textAlign: "center", marginTop: "20px" }}>
             DESIGNED BY WAQAR-ABBAS
-          </pre> */}
+          </pre>
         </Box>
       </Container>
     </>
