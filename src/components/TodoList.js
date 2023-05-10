@@ -6,41 +6,60 @@ import {
   Button,
   Container,
   List,
-  ListItem,
-  ListItemButton,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 
-import ListItemIcon from "@mui/material/ListItemIcon";
+import ListComponent from "./ListComponent";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
+//TodoList
 const TodoList = () => {
   const [inputList, setInputList] = useState(" ");
-  const [items , setItems] = useState([])
+  const [items, setItems] = useState([]);
 
+  // ItemEvent
   const itemEvent = (e) => {
     setInputList(e.target.value);
-};
-
-const addItem = (e) => {
-    setItems((oldItems) =>{
-        return [...oldItems , inputList]
-    })
-    setInputList("")
   };
-    
+
+  // AddItems
+  const addItem = () => {
+    if (inputList) {
+      setItems((oldItems) => {
+        return [...oldItems, inputList];
+      });
+    }
+
+    setInputList("");
+  };
+
+  // DeleteItems
+  const DeleteItems = (id) => {
+    setItems((oldItems) => {
+      return oldItems.filter((arrElem, index) => {
+        return index !== id;
+      });
+    });
+  };
+
+  // Clear All Items
+  const clearAll = () => {
+    setItems([]);
+  };
+
   return (
     <>
-      <Container maxWidth="sm" sx={{ marginTop: "20px" }}>
+      <Container maxWidth="xs" sx={{ marginTop: "20px" }}>
         <Box
           sx={{
             background: "#dedede",
             borderRadius: "12px",
-            height: 500,
+            height: "auto",
+            paddingBottom: "20px",
             boxShadow:
               "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
           }}
@@ -65,59 +84,58 @@ const addItem = (e) => {
             <TextField
               label="Enter a Task"
               variant="standard"
+              color="secondary"
               sx={{ width: "90%" }}
               onChange={itemEvent}
               value={inputList}
             />
-            <Button variant="outlined" onClick={addItem}>
-              <AddIcon color="primary" fontSize="large" />
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={addItem}
+              color="secondary"
+            >
+              <AddIcon fontSize="large" />
             </Button>
           </Stack>
 
           <List
             sx={{
               height: "200px",
-              background: "#baaebd",
+              background: "#ebebeb",
               borderRadius: "12px",
               overflowY: "scroll",
               margin: "30px 10px",
             }}
           >
-            {items.map((itemValue)=>{
-               return(
-                <ListItem>
-                <ListItemIcon>
-                  <ArrowRightIcon fontSize="large" sx={{ color: "black" }} />
-                </ListItemIcon>
-                {itemValue}
-                <Button
-                  variant="outlined"
-                  color="error"
-                  size="small"
-                  sx={{ position: "absolute", right: "0",marginRight:"10px" }}
-                >
-                  <DeleteIcon
-                    color="error"
-                    fontSize="small"
-                    sx={{ width: "20px" }}
-                  />
-                </Button>
-              </ListItem>
-               )
+            {items.map((itemValue, index) => {
+              return (
+                <ListComponent
+                  text={itemValue}
+                  id={index}
+                  key={index}
+                  onSelect={DeleteItems}
+                />
+              );
             })}
           </List>
 
-          <Stack alignItems="center">
-            <Button
-            variant="contained"
-            color="error"
-            sx={{ margin: "10px", }}
-            endIcon={<DeleteIcon />}
-            
-          >
-            Clear All
-          </Button></Stack>
-          <pre style={{textAlign:"center" , marginTop:"20px"}}>DESIGNED BY WAQAR-ABBAS</pre>
+          {items.length >= 1 && (
+            <Stack alignItems="center">
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ margin: "10px" }}
+                endIcon={<DeleteIcon />}
+                onClick={clearAll}
+              >
+                Clear All
+              </Button>
+            </Stack>
+          )}
+          {/* <pre style={{ textAlign: "center", marginTop: "20px" }}>
+            DESIGNED BY WAQAR-ABBAS
+          </pre> */}
         </Box>
       </Container>
     </>
