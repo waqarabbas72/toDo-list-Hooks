@@ -18,7 +18,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 //TodoList
 const TodoList = () => {
-  const [inputList, setInputList] = useState(" ");
+  const [inputList, setInputList] = useState('');
   const [items, setItems] = useState([]);
 
   // ItemEvent
@@ -28,13 +28,15 @@ const TodoList = () => {
 
   // AddItems
   const addItem = () => {
+    
     if (inputList) {
       setItems((oldItems) => {
-        return [...oldItems, inputList];
+        const data = [...oldItems, inputList];
+        return data
       });
+      setInputList("");
     }
 
-    setInputList("");
   };
 
   // DeleteItems
@@ -81,13 +83,16 @@ const TodoList = () => {
             spacing={0.4}
             sx={{ margin: "10px" }}
           >
+            
+            {/* inputList */}
             <TextField
               label="Enter a Task"
               variant="standard"
               color="secondary"
               sx={{ width: "90%" }}
-              onChange={itemEvent}
               value={inputList}
+              onChange={itemEvent}
+              required
             />
             <Button
               variant="outlined"
@@ -109,6 +114,7 @@ const TodoList = () => {
             }}
           >
             {items.map((itemValue, index) => {
+              // const id = Math.floor(Math.random()*Date.now)
               return (
                 <ListComponent
                   text={itemValue}
