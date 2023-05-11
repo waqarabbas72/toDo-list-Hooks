@@ -10,16 +10,32 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useEffect } from "react";
 
 import ListComponent from "./ListComponent";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 
+// Get Data from Local Storage
+const getDataFromLS = () => {
+  let list = localStorage.getItem("DataList");
+
+  if (list) {
+    return JSON.parse(localStorage.getItem("DataList"));
+  } else {
+    return [];
+  }
+};
+
 //TodoList
 const TodoList = () => {
-  const [inputList, setInputList] = useState('');
-  const [items, setItems] = useState([]);
+  const [inputList, setInputList] = useState("");
+  const [items, setItems] = useState(getDataFromLS());
+
+  useEffect(() => {
+    localStorage.setItem("DataList", JSON.stringify(items));
+  }, [items]);
 
   // ItemEvent
   const itemEvent = (e) => {
@@ -28,15 +44,13 @@ const TodoList = () => {
 
   // AddItems
   const addItem = () => {
-    
     if (inputList) {
       setItems((oldItems) => {
         const data = [...oldItems, inputList];
-        return data
+        return data;
       });
       setInputList("");
     }
-
   };
 
   // DeleteItems
@@ -83,7 +97,6 @@ const TodoList = () => {
             spacing={0.4}
             sx={{ margin: "10px" }}
           >
-            
             {/* inputList */}
             <TextField
               label="Enter a Task"
